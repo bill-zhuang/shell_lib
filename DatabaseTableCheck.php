@@ -49,7 +49,7 @@ class Database_Table_Check
 
                 if (count($target_table_definition) != count($source_table_definition))
                 {
-                    echo "\t" . 'Table ' . $table_name . ' not syned!!!' . "\n\n";
+                    echo "\t" . 'Table ' . $table_name . ' not syned!!!(Table fields count not equal!)' . "\n\n";
                 }
                 else
                 {
@@ -60,19 +60,17 @@ class Database_Table_Check
                         {
                             if ($file_content != $source_table_definition[$definition_key][$field_key])
                             {
-                                echo "\t" . 'Table ' . $table_name . ' not syned!!!' . "\n\n";
-                                $flag = true;
-                                break;
+                                if (!$flag)
+								{
+									echo "\t" . 'Table ' . $table_name . ' not syned!!!' . "\n\n";
+									$flag = true;
+								}
+								echo "\t\t" . 'Field: (Source)' . $source_table_definition[$definition_key]['Field'] . '---(Current)' . $definition_content['Field'] . "\n";
+								echo "\t\t\t" . 'Value(Source) :' . $source_table_definition[$definition_key][$field_key] . "\n";
+								echo "\t\t\t" . 'Value(Current):' . $file_content . "\n\n";
                             }
                         }
-
-                        if ($flag)
-                        {
-                            break;
-                        }
                     }
-
-                    //echo "\t" . 'Check table ' . $table_name . ' finished.' . "\n\n";
                 }
             }
             else
